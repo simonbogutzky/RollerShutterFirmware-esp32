@@ -8,7 +8,7 @@ Version: 1.0.0
 
 Document version: 1.0.0 
 
-Date: 16/04/2020
+Date: 17/04/2020
 
 ## What is the RollerShutterFirmware?
 The RollerShutterFirmware is a firmware for an esp32 to control for example VELUX INTEGRA via an integrated web server or the [RollerShutterApp](https://github.com/sbogutzky/RollerShutterApp/).
@@ -18,7 +18,11 @@ The RollerShutterFirmware is a firmware for an esp32 to control for example VELU
 ### Hardware Installation Instructions
 I use for the wireless connection a NodeMCU-32S ESP32 development board (similar to [Waveshare NodeMCU-32S ESP32 Development Board](https://www.amazon.com/dp/B07TXNK6P1/ref=cm_sw_em_r_mt_dp_U_DbcMEbPJSWKTA)), based on the popular [ESP32](http://espressif.com/) chipset.
 
-I open the remote of the VELUX INTEGRA shutters and add wires to the three buttons, to the power supply and the ground. The buttons are connected (up, green wire) to GPIO14, (stop, blue wire) to GPIO13 and (down, orange wire) to GPI012 of the WiFi3 click. 
+I open the remote of the VELUX INTEGRA shutters and add wires to the three buttons, to the power supply and the ground. The buttons are connected (up, green wire) to D14, (stop, blue wire) to D13 and (down, orange wire) to D12 of the development board. 
+
+![Arduino serial monitor](images/esp32-outs.jpg)
+
+*esp32 outs*
 
 Putting the NodeMCU-32S ESP32 development board:  
 
@@ -36,7 +40,7 @@ Download the [Arduino IDE](https://www.arduino.cc/en/Main/Software).
 sudo ln -s /usr/bin/python3 /usr/local/bin/python3
 sudo mkdir /usr/local/bin/
 ```
-Arduino IDE offers support for esp32. All you have to do is to go to File / Preferences, and on Additional Boards Manager URL add “https://dl.espressif.com/dl/package_esp32_index.json”. In Arduino IDE, Tools, setup the communication to board. I select: DOIT ESP32 DEVKIT V1. Do not forget to put the development board into firmware download mode before uploading your code.
+Arduino IDE offers support for esp32. All you have to do is to go to File / Preferences, and on Additional Boards Manager URL add “https://dl.espressif.com/dl/package_esp32_index.json”. In Arduino IDE, Tools, setup the communication to board. I select: DOIT ESP32 DEVKIT V1. I use [ESP32Webserver](https://github.com/Pedroalbuquerque/ESP32WebServer) for this project. Do not forget to put the development board into firmware download mode before uploading your code.
 
 ### Example Usage
 
