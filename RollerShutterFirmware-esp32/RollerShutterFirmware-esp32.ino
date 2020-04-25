@@ -50,30 +50,38 @@ void setup()
   digitalWrite(stp, HIGH);
   digitalWrite(up, HIGH);
   
-  Serial.begin(115200);
-    
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
+  Serial.begin(9600);
+  delay(1000);
+ 
+  // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3D)) { // Address 0x3D for 128x64
+    Serial.println(F("SSD1306 allocation failed"));
+    for(;;); // Don't proceed, loop forever
+  }
+
+  display.clearDisplay(); // clear the display buffer.
+
+  drawHeader();
+  drawConnecting();
+  drawSsid();
 
   WiFi.begin(ssid, password);
-  Serial.println("");
 
   // Wait for connection
+  String waitIndicator = ".";
+  drawText(0, 32, stringToChar(waitIndicator), 1);
+  display.display();
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
-    Serial.print(".");
+     waitIndicator.concat(".");
+     drawText(0, 36, stringToChar(waitIndicator), 1);
+     display.display();
   }
 
-  // Wait for connection
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("");
-  Serial.print("Connected to ");
-  Serial.println(ssid);
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
+  display.clearDisplay();
+
+  Serial.println("Draw connect info.");
+  drawConnectInfo();
 
   server.on("/", handleRoot);
 
@@ -81,18 +89,28 @@ void setup()
     resetCmd();
     digitalWrite(dwn, LOW);
     server.send(200, "text/plain", "down");
+    display.clearDisplay();
+    drawConnectInfo();
+    drawCommand("down");
   });
 
   server.on("/stop", [](){
     resetCmd();
     digitalWrite(stp, LOW);
     server.send(200, "text/plain", "stop");
+    display.clearDisplay();
+    drawConnectInfo();
+    drawCommand("stop");
   });
 
   server.on("/up", [](){
     resetCmd();
     digitalWrite(up, LOW);
     server.send(200, "text/plain", "up");
+
+    display.clearDisplay();
+    drawConnectInfo();
+    drawCommand("up");
   });
 
   server.on("/version", [](){
@@ -111,6 +129,68 @@ void resetCmd() {
   digitalWrite(up, HIGH);
   delay(2000);
 }
+
+void drawHeader() {
+  String header = "Roller shutter v";
+  header.concat(vers);
+  drawText(0, 0, stringToChar(header), 1);
+  display.display();
+}
+
+void drawConnecting() {
+  String connecting = "Connecting to ";
+  drawText(0, 12, stringToChar(connecting), 1);
+  display.display();
+}
+
+void drawConnect() {
+  String connecting = "Connect to ";
+  drawText(0, 12, stringToChar(connecting), 1);
+  display.display();
+}
+
+void drawSsid() {
+  drawText(0, 24, stringToChar(ssid), 1);
+  display.display();
+}
+
+void drawIp() {
+  String ip = "IP: ";
+  ip.concat(WiFi.localIP().toString());
+  drawText(0, 36, stringToChar(ip), 1);
+  display.display();
+}
+
+void drawConnectInfo() {
+  drawHeader();
+  drawConnect();
+  drawSsid();
+  drawIp();
+}
+
+void drawCommand(String command) {
+  String commandString = "Command: ";
+  commandString.concat(command);
+  drawText(0, 48, stringToChar(commandString), 1);
+  display.display();
+}
+
+void drawText(byte xPos, byte yPos, char *text, byte textSize)
+{
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(xPos, yPos);
+  display.setTextSize(textSize);
+  display.print(text);
+}
+
+char* stringToChar(String command){
+    if(command.length()!=0){
+        char *p = const_cast<char*>(command.c_str());
+        return p;
+    }
+}
+
+
 
 void loop(void){
   server.handleClient();
