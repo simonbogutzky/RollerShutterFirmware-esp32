@@ -4,11 +4,11 @@ Authors: Simon Bogutzky
 
 License: [MIT](https://opensource.org/licenses/MIT)
 
-Version: 1.0.0
+Version: 1.1.0
 
-Document version: 1.0.0 
+Document version: 1.1.0 
 
-Date: 17/04/2020
+Date: 26/04/2020
 
 ## What is the RollerShutterFirmware?
 The RollerShutterFirmware is a firmware for an esp32 to control for example VELUX INTEGRA via an integrated web server or the [RollerShutterApp](https://github.com/sbogutzky/RollerShutterApp/).
@@ -30,6 +30,17 @@ Putting the NodeMCU-32S ESP32 development board:
 2. press the Upload button in the Arduino IDE
 3. after the message "Connecting..." appears in the Arduino IDE, release the BOOT button
 
+### Adding SPI OLED Display
+
+In the next step I add an Adafruit SSD1306 128x64 display to show all information from the serial console on the display. You have to add the display parallel to the remote. Do not forget to add 3v3 to Vin and DC. 
+
+![parallel circuit](images/parallel-circuit.jpg)
+
+*Parallel circuit*
+
+![Vin DC connection](images/vin-dc-connection.jpg)
+
+*Vin DC connection*
 ### Programming ESP32 Development Board in the Arduino IDE
 
 Download the [Arduino IDE](https://www.arduino.cc/en/Main/Software). 
@@ -41,6 +52,8 @@ sudo ln -s /usr/bin/python3 /usr/local/bin/python3
 sudo mkdir /usr/local/bin/
 ```
 Arduino IDE offers support for esp32. All you have to do is to go to File / Preferences, and on Additional Boards Manager URL add “https://dl.espressif.com/dl/package_esp32_index.json”. In Arduino IDE, Tools, setup the communication to board. I select: DOIT ESP32 DEVKIT V1. I use [ESP32Webserver](https://github.com/Pedroalbuquerque/ESP32WebServer) for this project. Do not forget to put the development board into firmware download mode before uploading your code.
+
+**Note:** For flashing the eps32 in the parallel circuit, I have to remove the remote, because I got timing problems. After flashing I can add the remote again and the firmware is running properly.
 
 ### Example Usage
 
