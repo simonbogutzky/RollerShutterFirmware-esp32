@@ -4,9 +4,9 @@ Authors: Simon Bogutzky
 
 License: [MIT](https://opensource.org/licenses/MIT)
 
-Version: 1.1.0
+Version: 1.2.0
 
-Document version: 1.1.1 
+Document version: 1.2.0 
 
 Date: 26/04/2020
 
@@ -41,6 +41,15 @@ In the next step I add an Adafruit SSD1306 128x64 display to show all informatio
 ![Vin DC connection](images/vin-dc-connection.jpg)
 
 *Vin DC connection*
+
+### Adding DHT
+
+In the last step I add a humidity and temperature sensor AM2302 DHT22
+
+* Pin 1 = 3v3
+* Pin 2 = Data (D32)
+* Pin 4 = Ground
+
 ### Programming ESP32 Development Board in the Arduino IDE
 
 Download the [Arduino IDE](https://www.arduino.cc/en/Main/Software). 
@@ -53,7 +62,9 @@ sudo mkdir /usr/local/bin/
 ```
 Arduino IDE offers support for esp32. All you have to do is to go to File / Preferences, and on Additional Boards Manager URL add “https://dl.espressif.com/dl/package_esp32_index.json”. In Arduino IDE, Tools, setup the communication to board. I select: DOIT ESP32 DEVKIT V1. I use [ESP32Webserver](https://github.com/Pedroalbuquerque/ESP32WebServer) for this project. Do not forget to put the development board into firmware download mode before uploading your code.
 
-I use the SDD1306 library of [Adafruit](https://github.com/adafruit/Adafruit_SSD1306) for the programming.
+I use the SDD1306 library by [Adafruit](https://github.com/adafruit/Adafruit_SSD1306) for the programming.
+
+For the DHT I use the library by [Adafruit](https://github.com/adafruit/DHT-sensor-library). I add a timer to read the values of DHT only every 10 seconds. Unfortunetly the display is cleared every 10 seconds. How can I prevent a whole refresh???
 
 ### Example Usage
 
@@ -66,11 +77,11 @@ const char* password = "";
 
 with your WiFi settings.
 
-On the display you will see the IP address of the web server e. g. 192.168.2.94.
+On the display you will see the IP address of the webserver e. g. 192.168.2.94. The display shows the command if a command comes from the webserver. In the meantime it shows the humidity and the temperature.
 
-![Working display](images/working-display.jpg)
+![Working display and DHT](images/working-display-and-dht.jpg)
 
-*Working display*
+*Working display and DHT*
 
 In your favorite browser you can type the following commands in the address bar:
 

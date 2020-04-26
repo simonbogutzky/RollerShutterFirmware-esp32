@@ -6,7 +6,7 @@
   The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
   THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   
-  v1.1.1
+  v1.2.0
 */
 
 #include <ESP32WebServer.h>
@@ -14,13 +14,14 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <DHT.h>
 
 const char* ssid     = "";
 const char* password = "";
 
 ESP32WebServer server(80);
 
-const char* vers = "1.1.1";
+const char* vers = "1.2.0";
 const int dwn = 12;
 const int stp = 13;
 const int up = 14;
@@ -29,7 +30,15 @@ const int oledReset = 4;
 const int screenWidth = 128;
 const int screenHeight = 64;
 
+const int dhtPin = 32;
+#define DHTTYPE DHT22
+
+long timer = 0;
+long dhtTimeout = 10000;
+
 Adafruit_SSD1306 display(screenWidth, screenHeight, &Wire, oledReset);
+
+DHT dht(dhtPin, DHTTYPE);
 
 void handleRoot() {
   server.send(200, "text/plain; charset=utf-8", "Roller shutter webserver");
@@ -131,6 +140,8 @@ void setup()
 
   server.begin();
   Serial.println("HTTP server started");
+
+  dht.begin();
 }
 
 void resetCmd() {
@@ -185,6 +196,16 @@ void drawCommand(String command) {
   display.display();
 }
 
+void drawTemperatureAndHumity(float t, float h) {
+  String temperatureAndHumityString = "";
+  temperatureAndHumityString.concat(t);
+  temperatureAndHumityString.concat("*C ");
+  temperatureAndHumityString.concat(h);
+  temperatureAndHumityString.concat("%");
+  drawText(0, 48, stringToChar(temperatureAndHumityString), 1);
+  display.display();
+}
+
 void drawText(byte xPos, byte yPos, char *text, byte textSize)
 {
   display.setTextColor(SSD1306_WHITE);
@@ -202,4 +223,18 @@ char* stringToChar(String command){
 
 void loop(void){
   server.handleClient();
+
+  if (millis() > dhtTimeout + timer ) {
+    timer = millis();
+
+    float h = dht.readHumidity();
+    float t = dht.readTemperature();
+
+    if (isnan(h) || isnan(t)) {
+      return;
+    }
+    display.clearDisplay();
+    drawConnectInfo();
+    drawTemperatureAndHumity(t, h);
+  }
 }
