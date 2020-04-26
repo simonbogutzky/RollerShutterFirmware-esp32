@@ -6,20 +6,30 @@
   The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
   THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   
-  v1.0.0
+  v1.1.0
 */
 
 #include <ESP32WebServer.h>
+#include <SPI.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 
 const char* ssid     = "";
 const char* password = "";
 
 ESP32WebServer server(80);
 
-const char* vers = "1.0.0";
+const char* vers = "1.1.0";
 const int dwn = 12;
 const int stp = 13;
 const int up = 14;
+
+const int oledReset = 4;
+const int screenWidth = 128;
+const int screenHeight = 64;
+
+Adafruit_SSD1306 display(screenWidth, screenHeight, &Wire, oledReset);
 
 void handleRoot() {
   server.send(200, "text/plain; charset=utf-8", "Roller shutter webserver");
@@ -189,8 +199,6 @@ char* stringToChar(String command){
         return p;
     }
 }
-
-
 
 void loop(void){
   server.handleClient();
