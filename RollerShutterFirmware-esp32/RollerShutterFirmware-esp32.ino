@@ -6,7 +6,7 @@
   The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
   THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   
-  v1.1.0
+  v1.1.1
 */
 
 #include <ESP32WebServer.h>
@@ -20,7 +20,7 @@ const char* password = "";
 
 ESP32WebServer server(80);
 
-const char* vers = "1.1.0";
+const char* vers = "1.1.1";
 const int dwn = 12;
 const int stp = 13;
 const int up = 14;
@@ -79,7 +79,7 @@ void setup()
 
   // Wait for connection
   String waitIndicator = ".";
-  drawText(0, 32, stringToChar(waitIndicator), 1);
+  drawText(0, 36, stringToChar(waitIndicator), 1);
   display.display();
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
