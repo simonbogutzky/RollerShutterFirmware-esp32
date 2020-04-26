@@ -6,7 +6,7 @@ License: [MIT](https://opensource.org/licenses/MIT)
 
 Version: 1.1.0
 
-Document version: 1.1.0 
+Document version: 1.1.1 
 
 Date: 26/04/2020
 
@@ -53,7 +53,7 @@ sudo mkdir /usr/local/bin/
 ```
 Arduino IDE offers support for esp32. All you have to do is to go to File / Preferences, and on Additional Boards Manager URL add “https://dl.espressif.com/dl/package_esp32_index.json”. In Arduino IDE, Tools, setup the communication to board. I select: DOIT ESP32 DEVKIT V1. I use [ESP32Webserver](https://github.com/Pedroalbuquerque/ESP32WebServer) for this project. Do not forget to put the development board into firmware download mode before uploading your code.
 
-**Note:** For flashing the eps32 in the parallel circuit, I have to remove the remote, because I got timing problems. After flashing I can add the remote again and the firmware is running properly.
+I use the SDD1306 library of [Adafruit](https://github.com/adafruit/Adafruit_SSD1306) for the programming.
 
 ### Example Usage
 
@@ -66,19 +66,19 @@ const char* password = "";
 
 with your WiFi settings.
 
-In the serial monitor you will see the IP address of the web server e. g. 192.168.2.56.
+On the display you will see the IP address of the web server e. g. 192.168.2.94.
 
-![Arduino serial monitor](images/arduino-serial-monitor.jpg)
+![Working display](images/working-display.jpg)
 
-*Arduino serial monitor*
+*Working display*
 
 In your favorite browser you can type the following commands in the address bar:
 
 ```
-http://192.168.2.56/up - for moving the shutters up
-http://192.168.2.56/stop - for stopping the shutters
-http://192.168.2.56/up - for moving the shutters down
-http://192.168.2.56/version - getting the firmware version
+http://192.168.2.94/up - for moving the shutters up
+http://192.168.2.94/stop - for stopping the shutters
+http://192.168.2.94/up - for moving the shutters down
+http://192.168.2.94/version - getting the firmware version
 ```
 
 You can also use the [RollerShutterApp](https://github.com/sbogutzky/RollerShutterApp/). Make sure you change the IP address in the source code of the platform code.
