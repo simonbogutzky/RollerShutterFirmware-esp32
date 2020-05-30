@@ -6,9 +6,9 @@ License: [MIT](https://opensource.org/licenses/MIT)
 
 Version: 1.2.0
 
-Document version: 1.2.0 
+Document version: 1.2.1 
 
-Date: 26/04/2020
+Date: 30/05/2020
 
 ## What is the RollerShutterFirmware?
 The RollerShutterFirmware is a firmware for an esp32 to control for example VELUX INTEGRA via an integrated web server or the [RollerShutterApp](https://github.com/sbogutzky/RollerShutterApp/).
@@ -24,7 +24,7 @@ I open the remote of the VELUX INTEGRA shutters and add wires to the three butto
 
 *esp32 outs*
 
-Putting the NodeMCU-32S ESP32 development board:  
+Putting the NodeMCU-32S ESP32 development board in bootloader mode:  
 
 1. press and hold the BOOT button
 2. press the Upload button in the Arduino IDE
