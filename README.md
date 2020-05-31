@@ -1,19 +1,19 @@
 
-# RollerShutterFirmware: Firmware for an esp32 to control VELUX INTEGRA shutters
+# RollerShutterFirmware: Firmware for an ESP32 to Control VELUX INTEGRA Shutters
 Authors: Simon Bogutzky
 
 License: [MIT](https://opensource.org/licenses/MIT)
 
 Version: 1.2.0
 
-Document version: 1.2.1 
+Document version: 1.2.2 
 
-Date: 30/05/2020
+Date: 31/05/2020
 
-## What is the RollerShutterFirmware?
+## What is the Roller Shutter Firmware?
 The RollerShutterFirmware is a firmware for an esp32 to control for example VELUX INTEGRA via an integrated web server or the [RollerShutterApp](https://github.com/sbogutzky/RollerShutterApp/).
 
-## Using the RollerShutterFirmware
+## Using the Roller Shutter Firmware
 
 ### Hardware Installation Instructions
 I use for the wireless connection a NodeMCU-32S ESP32 development board (similar to [Waveshare NodeMCU-32S ESP32 Development Board](https://www.amazon.com/dp/B07TXNK6P1/ref=cm_sw_em_r_mt_dp_U_DbcMEbPJSWKTA)), based on the popular [ESP32](http://espressif.com/) chipset.
@@ -79,7 +79,7 @@ with your WiFi settings.
 
 On the display you will see the IP address of the webserver e. g. 192.168.2.94. The display shows the command if a command comes from the webserver. In the meantime it shows the humidity and the temperature.
 
-![Working display and DHT](images/working-display-and-dht.jpg)
+![Working Display and DHT](images/working-display-and-dht.jpg)
 
 *Working display and DHT*
 
@@ -95,4 +95,4 @@ http://192.168.2.94/version - getting the firmware version
 You can also use the [RollerShutterApp](https://github.com/sbogutzky/RollerShutterApp/). Make sure you change the IP address in the source code of the platform code.
 
 ## Author and Contribution
-As by the License this is free software released by the Simon Bogutzky. The author (Simon Bogutzky) welcomes external contributors to freely use and extend this software. If you need some help, please write an [issue](https://github.com/sbogutzky/RollerShutterFirmware/issues).
+As expressed by license, this is free software published by Simon Bogutzky. The author (Simon Bogutzky) welcomes external contributors to freely use and extend this software. If you need help, please write an [issue](https://github.com/sbogutzky/RollerShutterFirmware/issues).
