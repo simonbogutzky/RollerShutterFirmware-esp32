@@ -32,6 +32,14 @@ void setup()
   Serial.begin(9600);
   Serial.println();
 
+  pinMode(dwnPin, OUTPUT);
+  pinMode(stpPin, OUTPUT);
+  pinMode(upPin, OUTPUT);
+
+  digitalWrite(dwnPin, HIGH);
+  digitalWrite(stpPin, HIGH);
+  digitalWrite(upPin, HIGH);
+
   bool connected = connectToWiFi();
 
   if (connected) {
@@ -47,7 +55,7 @@ void setup()
       down();
     }
   }
-
+  delay(60000);
   esp_sleep_enable_timer_wakeup(sleepTimeInMicroSeconds);
   esp_deep_sleep_start();
 }
